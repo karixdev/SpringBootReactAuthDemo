@@ -52,6 +52,13 @@ public class User {
     )
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(
+            name = "user_role",
+            nullable = false
+    )
+    private UserRole userRole;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
