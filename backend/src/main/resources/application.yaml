@@ -1,0 +1,14 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate:
+        format_sql: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring_boot_react_auth_demo
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver

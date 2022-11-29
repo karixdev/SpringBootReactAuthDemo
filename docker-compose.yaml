@@ -8,7 +8,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: blogapi
+      MYSQL_DATABASE: spring_boot_react_auth_demo
     ports:
       - "3306:3306"
 
