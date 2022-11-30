@@ -25,6 +25,7 @@ services:
       - mysql
 
   frontend:
+    container_name: frontend
     build: ./frontend
     volumes: 
       - ./frontend/src:/app/src
