@@ -16,24 +16,6 @@ public class RegisterUserRequestTest {
     private JacksonTester<RegisterUserRequest> jTester;
 
     @Test
-    void testSerialize() throws IOException {
-        RegisterUserRequest payload = new RegisterUserRequest(
-                "email@email.com",
-                "secret-password"
-        );
-
-        var result = jTester.write(payload);
-
-        assertThat(result).hasJsonPathStringValue("$.email");
-        assertThat(result).extractingJsonPathValue("$.email")
-                .isEqualTo("email@email.com");
-
-        assertThat(result).hasJsonPathStringValue("$.password");
-        assertThat(result).extractingJsonPathValue("$.password")
-                .isEqualTo("secret-password");
-    }
-
-    @Test
     void testDeserialize() throws IOException {
         String content = """
                 {
