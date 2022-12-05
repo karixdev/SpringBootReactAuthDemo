@@ -1,15 +1,15 @@
 package com.karixdev.backend.controller;
 
+import com.karixdev.backend.payload.request.LoginRequest;
 import com.karixdev.backend.payload.request.RegisterUserRequest;
 import com.karixdev.backend.payload.response.SuccessResponse;
+import com.karixdev.backend.security.UserPrincipal;
 import com.karixdev.backend.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -25,6 +25,13 @@ public class AuthController {
         authService.registerUser(payload);
 
         return new ResponseEntity<>(new SuccessResponse(), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> me(
+            @AuthenticationPrincipal UserPrincipal userPrincipal
+    ) {
+        return ResponseEntity.ok(authService.me(userPrincipal));
     }
 
 }

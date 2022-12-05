@@ -12,3 +12,10 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+jwt:
+  issuer: SpringReactAuthDemo
+  expiration-hours: 1
+  key:
+    public: classpath:certs/public.pem
+    private: classpath:certs/private.pem
