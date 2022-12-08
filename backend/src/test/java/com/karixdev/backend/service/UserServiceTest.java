@@ -16,8 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -85,7 +84,37 @@ public class UserServiceTest {
 
         // Then
         assertEquals(user, result);
+    }
 
+    @Test
+    void GivenNonExistingUserEmail_WhenFindByEmail_ThenReturnsEmptyOptional() {
+        // Given
+        String email = "abc@abc.pl";
+
+        when(userRepository.findByEmail(any(String.class)))
+                .thenReturn(Optional.empty());
+
+        // When
+        Optional<User> result = underTest.findUserByEmail(email);
+
+        // Then
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void GivenExistingUserEmail_WhenFindByEmail_ThenReturnsNonEmptyOptionalWithCorrectUserObject() {
+        // Given
+        String email = "abc@abc.pl";
+
+        when(userRepository.findByEmail(any(String.class)))
+                .thenReturn(Optional.of(user));
+
+        // When
+        Optional<User> result = underTest.findUserByEmail(email);
+
+        // Then
+        assertTrue(result.isPresent());
+        assertEquals(user, result.get());
     }
 
 }
