@@ -41,7 +41,7 @@ public class JwtIntegrationTest {
         String token = jwtHelper.generateToken(userPrincipal);
 
         webClient.get().uri("/api/auth/me")
-                .header("Authorization", "Bearer " + token + "a")
+                .header("Authorization", "Bearer " + token)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk();
