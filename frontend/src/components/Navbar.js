@@ -9,6 +9,7 @@ export default function Navbar() {
       <Container>
         <BNavbar.Brand href="/">AuthDemo</BNavbar.Brand>
         <Nav className="me-auto">
+          <Link to="/login" className="nav-link">Login</Link>
           <Link to="/register" className="nav-link">Register</Link>
         </Nav>
       </Container>
