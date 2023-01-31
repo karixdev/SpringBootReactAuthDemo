@@ -9,28 +9,34 @@ export default function Login() {
 
 	const [error, setError] = useState('');
 
+	const retrieveJWT = (payload) => {
+		axios.post(buildUriAuth('/login'), payload)
+		.then(resp => {
+			if (resp.data?.access_token === undefined) {
+				setError('Something went wrong. Please try again later');
+				return;
+			}
+			
+			console.log(resp.data.access_token);
+		})
+		.catch(err => {
+			setError(err.response.status === 401 ? 
+				'Invalid credentials' : 
+				'Something went wrong. Please try again later');
+		})
+	}
+
 	const formSubmitHandler = e => {
 		e.preventDefault();
+
+		setError('');
 
 		const payload = {
 			email: email.current.value,
 			password: password.current.value
 		}
 
-		setError('');
-
-		axios.post(buildUriAuth('/login'), payload)
-		.then(resp => {
-			console.log('Successful login');
-			console.log(resp.data);
-		})
-		.catch(err => {
-			if (err.response.status === 401) {
-				setError('Invalid credentials');
-			} else {
-				setError('Something went wrong. Please try again later');
-			}
-		})
+		retrieveJWT(payload);
 	}
 	
 	return (
