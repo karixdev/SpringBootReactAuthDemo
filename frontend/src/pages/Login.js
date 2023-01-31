@@ -59,7 +59,7 @@ export default function Login() {
 					<label htmlFor="password">Password</label>
 					<input type="password" className="form-control" id="password" placeholder="Password" ref={password} />
         </div>
-        <button type="submit" className="btn btn-primary">Register</button>
+        <button type="submit" className="btn btn-primary">Login</button>
       </form>
 		</div>
 	)
