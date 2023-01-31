@@ -4,10 +4,6 @@ import {buildUriAuth} from '../api/apiUriBuilder'
 import {Alert} from "react-bootstrap";
 import {emailValidator, passwordValidator} from "../utils/validators";
 
-const validate = (email, password, repeatPassword) => {
-  return emailValidator(email) && passwordValidator(password) && password === repeatPassword;
-}
-
 export default function Register() {
   const containerStyles = {
     width: "60%",
@@ -20,6 +16,37 @@ export default function Register() {
 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+
+  const validate = (email, password, repeatPassword) => {
+    return emailValidator(email) && passwordValidator(password) && password === repeatPassword;
+  }
+
+  const resetCredentials = () => {
+    email.current.value = '';
+    password.current.value = '';
+    repeatPassword.current.value = '';
+  }
+
+  const register = (payload) => {
+    axios.post(buildUriAuth('/register'), payload)
+    .then(() => {
+      resetCredentials();
+
+      setError('');
+      setSuccess(true);
+    })
+    .catch(err => {
+      const status = err.response.status;
+
+      if (status === 409) {
+        setError('User with this email already exists')
+      } else if (status === 400) {
+        setError('Please provide valid credentials')
+      } else {
+        setError('Something went wrong. Please try again later')
+      }
+    });
+  }
 
   const formSubmitHandler = e => {
     e.preventDefault();
@@ -42,26 +69,7 @@ export default function Register() {
       password: passwordVal
     };
 
-    axios.post(buildUriAuth('/register'), payload)
-      .then(() => {
-        email.current.value = '';
-        password.current.value = '';
-        repeatPassword.current.value = '';
-
-        setError('');
-        setSuccess(true);
-      })
-      .catch(err => {
-        const status = err.response.status;
-
-        if (status === 409) {
-          setError('User with this email already exists')
-        } else if (status === 400) {
-          setError('Please provide valid credentials')
-        } else {
-          setError('Something went wrong. Please try again later')
-        }
-      });
+    register(payload);
   };
 
   return (
