@@ -3,6 +3,7 @@ import axios from "axios";
 import {buildUriAuth} from '../api/apiUriBuilder'
 import {Alert} from "react-bootstrap";
 import {emailValidator, passwordValidator} from "../utils/validators";
+import ErrorAlert from "../components/ErrorAlert";
 
 export default function Register() {
   const containerStyles = {
@@ -75,9 +76,7 @@ export default function Register() {
   return (
     <div style={containerStyles}>
       {error.length > 0 && (
-        <Alert variant="danger">
-          {error}
-        </Alert>
+        <ErrorAlert message={error}/>
       )}
       {success && (
         <Alert variant="success">

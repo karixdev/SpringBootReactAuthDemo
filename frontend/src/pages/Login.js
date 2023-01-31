@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRef, useState } from "react"
 import { Alert } from "react-bootstrap";
 import { buildUriAuth } from "../api/apiUriBuilder";
+import ErrorAlert from '../components/ErrorAlert';
 
 export default function Login() {
 	const email = useRef(null);
@@ -16,7 +17,7 @@ export default function Login() {
 				setError('Something went wrong. Please try again later');
 				return;
 			}
-			
+
 			console.log(resp.data.access_token);
 		})
 		.catch(err => {
@@ -42,9 +43,7 @@ export default function Login() {
 	return (
 		<div>
 			{error.length > 0 && (
-				<Alert variant="danger">
-					{error}
-				</Alert>
+				<ErrorAlert message={error}/>
 			)}
 			<form onSubmit={formSubmitHandler}>
 				<div className="form-group">
