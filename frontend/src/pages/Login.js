@@ -1,12 +1,15 @@
 import axios from "axios";
-import { useRef, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import { Alert } from "react-bootstrap";
 import { buildUriAuth } from "../api/apiUriBuilder";
 import ErrorAlert from '../components/ErrorAlert';
+import AuthContext from "../context/AuthProvider";
 
 export default function Login() {
 	const email = useRef(null);
 	const password = useRef(null);
+
+	const { setAuth } = useContext(AuthContext);
 
 	const [error, setError] = useState('');
 
@@ -18,7 +21,9 @@ export default function Login() {
 				return;
 			}
 
-			console.log(resp.data.access_token);
+			const accessToken = resp.data.access_token;
+
+			setAuth({accessToken});
 		})
 		.catch(err => {
 			setError(err.response.status === 401 ? 
